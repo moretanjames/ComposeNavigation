@@ -18,7 +18,7 @@ class NoteViewModel(application: Application, savedStateHandle: SavedStateHandle
 
     private val repo = NoteRepo(application)
 
-    private val existingNoteId = savedStateHandle.getStateFlow<String?>("noteId", null)
+    private val existingNoteId = savedStateHandle.getStateFlow<String?>(NOTE_ID_ARG, null)
 
     private val existingNote = existingNoteId.map { it?.let { runCatching { repo.getNoteById(it.toLong()) }.getOrNull() } }
 
