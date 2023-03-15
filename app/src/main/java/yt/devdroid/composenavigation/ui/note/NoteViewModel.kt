@@ -18,9 +18,9 @@ class NoteViewModel(application: Application, savedStateHandle: SavedStateHandle
 
     private val repo = NoteRepo(application)
 
-    private val existingNoteId = savedStateHandle.getStateFlow<Long?>("noteId", null)
+    private val existingNoteId = savedStateHandle.getStateFlow<String?>("noteId", null)
 
-    private val existingNote = existingNoteId.map { id -> id?.let { repo.getNoteById(it) } }
+    private val existingNote = existingNoteId.map { id -> id?.let { runCatching { repo.getNoteById(it.toLong()) }.getOrNull() } }
 
     private val createdNote = MutableStateFlow(Note(id = -1))
 

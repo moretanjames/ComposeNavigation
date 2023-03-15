@@ -27,7 +27,7 @@ fun Navigation() {
         composable(
             route = "note?noteId={noteId}",
             arguments = listOf(
-                navArgument("noteId") { type = NavType.LongType; defaultValue = -1 }
+                navArgument("noteId") { type = NavType.StringType; nullable = true }
             )
         ) {
             NoteScreen(
