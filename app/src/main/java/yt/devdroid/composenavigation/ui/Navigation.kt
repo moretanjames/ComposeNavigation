@@ -19,15 +19,15 @@ fun Navigation() {
     ) {
         composable(route = "home") {
             HomeScreen(
-                onClickNote = { navController.navigate("note/${it.id}") },
+                onClickNote = { navController.navigate("note?noteId=${it.id}") },
                 onClickCreateNote = { navController.navigate("note") }
             )
         }
 
         composable(
-            route = "note/{noteId}",
+            route = "note?noteId={noteId}",
             arguments = listOf(
-                navArgument("noteId") { type = NavType.LongType ; defaultValue = -1 }
+                navArgument("noteId") { type = NavType.LongType; defaultValue = -1 }
             )
         ) {
             NoteScreen(
