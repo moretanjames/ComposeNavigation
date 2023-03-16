@@ -18,14 +18,15 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     private val existingNote = MutableStateFlow<Note?>(null)
 
-    private val createdNote = MutableStateFlow(Note(id = -1))
+    private val createdNote = MutableStateFlow(Note())
 
     val note = combine(existingNote, createdNote) { existing, created ->
         existing ?: created
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Note(id = -1))
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Note())
 
     fun setNote(note: Note?) = viewModelScope.launch {
         existingNote.emit(note)
+        createdNote.emit(Note())
     }
 
     fun saveNote() = viewModelScope.launch(Dispatchers.IO) {
