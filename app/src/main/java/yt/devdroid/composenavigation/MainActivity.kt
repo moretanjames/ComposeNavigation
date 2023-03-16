@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import yt.devdroid.composenavigation.ui.Navigation
 import yt.devdroid.composenavigation.ui.home.HomeScreen
 import yt.devdroid.composenavigation.ui.note.NoteScreen
 import yt.devdroid.composenavigation.ui.note.NoteViewModel
@@ -27,32 +28,9 @@ class MainActivity : ComponentActivity() {
             ComposeNavigationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    var screen by rememberSaveable { mutableStateOf(Screen.HOME) }
-
-                    val viewModel: NoteViewModel = viewModel()
-
-                    val note by viewModel.note.collectAsState()
-
-                    when (screen) {
-                        Screen.HOME -> {
-                            HomeScreen(onClickNote = { viewModel.setNote(it); screen = Screen.NOTE }, onClickCreateNote = { viewModel.setNote(null); screen = Screen.NOTE })
-                        }
-                        Screen.NOTE -> {
-                            NoteScreen(
-                                note = note,
-                                updateNote = { viewModel.updateNote(it) },
-                                onBackPressed = { screen = Screen.HOME },
-                                onSaveNote = { viewModel.saveNote(); screen = Screen.HOME }
-                            )
-                        }
-                    }
+                   Navigation()
                 }
             }
         }
     }
 }
-
-enum class Screen {
-    HOME, NOTE
-}
-
